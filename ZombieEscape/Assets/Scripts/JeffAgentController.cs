@@ -8,6 +8,7 @@ public class JeffAgentController : MonoBehaviour
     static Animator animator;
     public NavMeshAgent agent;
     public float seePlayerRadius;
+    public float teleportRadius;
     private GameObject player;
     private float playerDistance;
 
@@ -24,7 +25,13 @@ public class JeffAgentController : MonoBehaviour
         {
             animator.SetBool("jeffIsWalking", true);
             agent.SetDestination(player.transform.position);            
-        } else
+        } if(playerDistance >= teleportRadius)
+        {
+            agent.transform.position = new Vector3(player.transform.position.x + 10f, transform.position.y, player.transform.position.z + 10f);
+            animator.SetBool("jeffIsWalking", true);
+            agent.SetDestination(player.transform.position);
+        }
+        else
         {
             animator.SetBool("jeffIsWalking", false);
         }
